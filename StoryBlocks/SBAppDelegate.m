@@ -7,10 +7,12 @@
 //
 
 #import "SBAppDelegate.h"
+#import "LandingView.h"
+#import "StoryList.h"
 
-#import "SBMasterViewController.h"
+//#import "SBMasterViewController.h"
 
-#import "SBDetailViewController.h"
+//#import "SBDetailViewController.h"
 
 @implementation SBAppDelegate
 
@@ -19,6 +21,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize splitViewController = _splitViewController;
+@synthesize navigation = _navigation;
 
 - (void)dealloc
 {
@@ -35,19 +38,13 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
 
-    SBMasterViewController *masterViewController = [[[SBMasterViewController alloc] initWithNibName:@"SBMasterViewController" bundle:nil] autorelease];
-    UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
-
-    SBDetailViewController *detailViewController = [[[SBDetailViewController alloc] initWithNibName:@"SBDetailViewController" bundle:nil] autorelease];
-    UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:detailViewController] autorelease];
-
-    self.splitViewController = [[[UISplitViewController alloc] init] autorelease];
-    self.splitViewController.delegate = detailViewController;
-    self.splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailNavigationController, nil];
-    masterViewController.detailViewController = detailViewController;
-    masterViewController.managedObjectContext = self.managedObjectContext;
-    self.window.rootViewController = self.splitViewController;
+//    LandingView *landing = [[LandingView alloc] initWithNibName:nil bundle:nil];
+    StoryList *storyList = [[StoryList alloc] initWithNibName:nil bundle:nil];
+    storyList.managedObjectContext = self.managedObjectContext;
+    self.navigation = [[UINavigationController alloc] initWithRootViewController:storyList];
+    [self.window addSubview:self.navigation.view];
     [self.window makeKeyAndVisible];
+    [storyList release];
     return YES;
 }
 

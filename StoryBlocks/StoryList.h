@@ -1,5 +1,5 @@
 //
-//  SBMasterViewController.h
+//  StoryList.h
 //  StoryBlocks
 //
 //  Created by Patrick Tescher on 10/11/11.
@@ -7,16 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class SBDetailViewController;
-
 #import <CoreData/CoreData.h>
 
-@interface SBMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface StoryList : UITableViewController <NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) SBDetailViewController *detailViewController;
+@property (strong, nonatomic) UIViewController *detailViewController;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end
