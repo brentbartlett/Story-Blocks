@@ -8,10 +8,16 @@
 
 #import "StoryEditor.h"
 #import "ImageDemoFilledCell.h"
+#import "Slideshow.h"
+#import "StoryImage.h"
 
 @implementation StoryEditor
+@synthesize nameField;
 @synthesize story = _story;
 @synthesize gridView = _gridView;
+@synthesize images;
+@synthesize imageDatabase;
+@synthesize storyImages;
 
 - (void)setStory:(Story*)story {
     if (_story != nil) {
@@ -19,6 +25,22 @@
         _story = nil;
     }
     _story = [story retain];
+    self.images = [[NSMutableArray alloc] init];
+    for (StoryImage* image in self.story.images) {
+//        [self.images addObject:[UIImage imageNamed:image.imageName]];
+    }
+    self.imageDatabase = [[NSMutableArray alloc] init];
+    NSArray * paths = [NSBundle pathsForResourcesOfType: @"jpg" inDirectory: [[NSBundle mainBundle] bundlePath]];
+    
+    for ( NSString * path in paths )
+    {
+        [self.imageDatabase addObject: [UIImage imageNamed:[path lastPathComponent]]];
+    }
+    [self.storyImages reloadData];
+    [self.gridView reloadData];
+    self.title = story.name;
+    self.nameField.text = story.name;
+
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -26,6 +48,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
@@ -39,12 +62,26 @@
 }
 
 #pragma mark -
+#pragma mark Grid View Delegate
+
+- (void)gridView:(AQGridView *)gridView didSelectItemAtIndex:(NSUInteger)index {
+    [self.images addObject:[self.imageDatabase objectAtIndex:index]];
+    
+    
+    
+    NSLog(@"Added an image, now have %d images", self.images.count);
+    [self.imageDatabase removeObjectAtIndex:index];
+    [gridView deleteItemsAtIndices:[NSIndexSet indexSetWithIndex:index] withAnimation:AQGridViewItemAnimationFade];
+    [self.storyImages reloadData];
+}
+     
+
+
 #pragma mark Grid View Data Source
 
 - (NSUInteger) numberOfItemsInGridView: (AQGridView *) aGridView
 {
-//    return ( [_imageNames count] );
-    return 13;
+    return self.imageDatabase.count;
 }
 
 - (AQGridViewCell *) gridView: (AQGridView *) aGridView cellForItemAtIndex: (NSUInteger) index
@@ -52,12 +89,13 @@
     ImageDemoFilledCell *cell = (ImageDemoFilledCell *)[aGridView dequeueReusableCellWithIdentifier: @"ImageCell"];
     if ( cell == nil )
     {
-        cell = [[[ImageDemoFilledCell alloc] initWithFrame: CGRectMake(0.0, 0.0, 200.0, 150.0)
+        cell = [[[ImageDemoFilledCell alloc] initWithFrame: CGRectMake(0.0, 0.0, 204, 204)
                                                  reuseIdentifier: @"ImageCell"] autorelease];
         cell.selectionStyle = AQGridViewCellSelectionStyleBlueGray;
     }
     
-    cell.image = [UIImage imageNamed: @"BW-kitten.jpg"];
+    cell.image = [self.imageDatabase objectAtIndex:index];
+    cell.contentMode = UIViewContentModeScaleAspectFill;
     return cell;
 }
 
@@ -66,6 +104,36 @@
     return CGSizeMake(256, 256);
 }
 
+#pragma mark - Table view stuff
+
+- (int)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.images.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIdentifier = @"NewCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+        cell.clipsToBounds = TRUE;
+    }
+    
+//    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(8, 8, 240, 240)];
+    cell.imageView.image = [self.images objectAtIndex:indexPath.row];
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//    imageView.contentMode = UIViewContentModeScaleAspectFill;
+//    imageView.clipsToBounds = YES;
+//    [imageView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+//    [cell addSubview:imageView];
+//    [imageView release];
+    
+    return cell;
+}
 
 #pragma mark - View lifecycle
 
@@ -92,6 +160,8 @@
 - (void)viewDidUnload
 {
     [self setGridView:nil];
+    [self setStoryImages:nil];
+    [self setNameField:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -105,6 +175,24 @@
 
 - (void)dealloc {
     [_gridView release];
+    [storyImages release];
+    [nameField release];
     [super dealloc];
+}
+
+- (IBAction)preview:(id)sender {
+    Slideshow *slideshow = [[Slideshow alloc] initWithNibName:nil bundle:nil];
+    [slideshow setImages:self.images];
+    [self.navigationController pushViewController:slideshow animated:YES];
+    [slideshow release];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    return YES;
+}
+
+- (IBAction)changedName:(id)sender {
+    self.story.name = self.nameField.text;
+    self.title = self.nameField.text;
 }
 @end

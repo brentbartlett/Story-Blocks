@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Image;
+@class StoryImage;
 
 @interface Story : NSManagedObject
 
@@ -19,8 +19,8 @@
 
 @interface Story (CoreDataGeneratedAccessors)
 
-- (void)addImagesObject:(Image *)value;
-- (void)removeImagesObject:(Image *)value;
+- (void)addImagesObject:(StoryImage *)value;
+- (void)removeImagesObject:(StoryImage *)value;
 - (void)addImages:(NSSet *)values;
 - (void)removeImages:(NSSet *)values;
 

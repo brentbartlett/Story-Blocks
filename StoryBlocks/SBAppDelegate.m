@@ -42,6 +42,7 @@
     StoryList *storyList = [[StoryList alloc] initWithNibName:nil bundle:nil];
     storyList.managedObjectContext = self.managedObjectContext;
     self.navigation = [[UINavigationController alloc] initWithRootViewController:storyList];
+    [self.navigation.navigationBar setBarStyle:UIBarStyleBlackOpaque]; 
     [self.window addSubview:self.navigation.view];
     [self.window makeKeyAndVisible];
     [storyList release];

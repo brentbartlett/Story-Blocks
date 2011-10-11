@@ -1,17 +1,17 @@
 //
-//  Story.m
+//  Image.m
 //  StoryBlocks
 //
 //  Created by Patrick Tescher on 10/11/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "Story.h"
 #import "StoryImage.h"
 
-@implementation Story
 
-@dynamic name;
-@dynamic images;
+@implementation StoryImage
+
+@dynamic imageName;
+@dynamic story;
 
 @end

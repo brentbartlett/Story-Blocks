@@ -273,6 +273,20 @@
     cell.textLabel.text = [[managedObject valueForKey:@"name"] description];
 }
 
+
+-(NSString *) genRandStringLength: (int) len {
+    
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    for (int i=0; i<len; i++) {
+        [randomString appendFormat: @"%c", [letters characterAtIndex:(rand() % [letters length])]];
+    }
+         
+    return randomString;
+}
+
+
 - (void)insertNewObject
 {
     // Create a new instance of the entity managed by the fetched results controller.
@@ -282,7 +296,8 @@
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:@"" forKey:@"name"];
+    NSString *name = [NSString stringWithFormat:@"Story %@", [self genRandStringLength:4]];
+    [newManagedObject setValue:name forKey:@"name"];
     
     // Save the context.
     NSError *error = nil;
