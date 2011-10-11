@@ -30,6 +30,9 @@
 		CEE9A3E61444DCE2002DB6E4 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE9A3E51444DCE2002DB6E4 /* Image.m */; };
 		CEE9A3EA1444DCE3002DB6E4 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE9A3E91444DCE3002DB6E4 /* Story.m */; };
 		CEE9A3F81444E4CB002DB6E4 /* libAQGridView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE9A3F31444E48E002DB6E4 /* libAQGridView.a */; };
+		CEE9A4021444EA39002DB6E4 /* BW-kitten.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEE9A4011444EA39002DB6E4 /* BW-kitten.jpg */; };
+		CEE9A4061444EB4E002DB6E4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE9A4051444EB4E002DB6E4 /* QuartzCore.framework */; };
+		CEE9A4091444EDC2002DB6E4 /* ImageDemoFilledCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE9A4081444EDC2002DB6E4 /* ImageDemoFilledCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +50,7 @@
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = AQGridView;
 		};
-		CEE9A3F61444E4C7002DB6E4 /* PBXContainerItemProxy */ = {
+		CEE9A4031444EAEA002DB6E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEE9A3EB1444E48E002DB6E4 /* AQGridView.xcodeproj */;
 			proxyType = 1;
@@ -89,6 +92,10 @@
 		CEE9A3E81444DCE3002DB6E4 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
 		CEE9A3E91444DCE3002DB6E4 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		CEE9A3EB1444E48E002DB6E4 /* AQGridView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AQGridView.xcodeproj; path = AQGridView/AQGridView.xcodeproj; sourceTree = "<group>"; };
+		CEE9A4011444EA39002DB6E4 /* BW-kitten.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "BW-kitten.jpg"; sourceTree = "<group>"; };
+		CEE9A4051444EB4E002DB6E4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CEE9A4071444EDC2002DB6E4 /* ImageDemoFilledCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageDemoFilledCell.h; path = AQGridView/Examples/ImageDemo/Classes/ImageDemoFilledCell.h; sourceTree = SOURCE_ROOT; };
+		CEE9A4081444EDC2002DB6E4 /* ImageDemoFilledCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageDemoFilledCell.m; path = AQGridView/Examples/ImageDemo/Classes/ImageDemoFilledCell.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,10 +103,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEE9A4061444EB4E002DB6E4 /* QuartzCore.framework in Frameworks */,
+				CE3EFE551444D70900696C4D /* CoreGraphics.framework in Frameworks */,
 				CEE9A3F81444E4CB002DB6E4 /* libAQGridView.a in Frameworks */,
 				CE3EFE511444D70900696C4D /* UIKit.framework in Frameworks */,
 				CE3EFE531444D70900696C4D /* Foundation.framework in Frameworks */,
-				CE3EFE551444D70900696C4D /* CoreGraphics.framework in Frameworks */,
 				CE3EFE571444D70900696C4D /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +129,7 @@
 		CE3EFE411444D70900696C4D = {
 			isa = PBXGroup;
 			children = (
+				CEE9A4051444EB4E002DB6E4 /* QuartzCore.framework */,
 				CE3EFE581444D70900696C4D /* StoryBlocks */,
 				CE3EFE801444D70B00696C4D /* StoryBlocksTests */,
 				CE3EFE4F1444D70900696C4D /* Frameworks */,
@@ -153,6 +162,8 @@
 		CE3EFE581444D70900696C4D /* StoryBlocks */ = {
 			isa = PBXGroup;
 			children = (
+				CEE9A4071444EDC2002DB6E4 /* ImageDemoFilledCell.h */,
+				CEE9A4081444EDC2002DB6E4 /* ImageDemoFilledCell.m */,
 				CE3EFE911444D74300696C4D /* LandingView.h */,
 				CE3EFE921444D74300696C4D /* LandingView.m */,
 				CE3EFE931444D74300696C4D /* LandingView.xib */,
@@ -177,6 +188,7 @@
 		CE3EFE591444D70900696C4D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CEE9A4011444EA39002DB6E4 /* BW-kitten.jpg */,
 				CE3EFE5A1444D70900696C4D /* StoryBlocks-Info.plist */,
 				CE3EFE5B1444D70900696C4D /* InfoPlist.strings */,
 				CE3EFE5E1444D70900696C4D /* main.m */,
@@ -226,7 +238,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				CEE9A3F71444E4C7002DB6E4 /* PBXTargetDependency */,
+				CEE9A4041444EAEA002DB6E4 /* PBXTargetDependency */,
 			);
 			name = StoryBlocks;
 			productName = StoryBlocks;
@@ -303,6 +315,7 @@
 				CE3EFE951444D74300696C4D /* LandingView.xib in Resources */,
 				CE3EFE9A1444D77600696C4D /* StoryList.xib in Resources */,
 				CE3EFE9F1444D97900696C4D /* StoryEditor.xib in Resources */,
+				CEE9A4021444EA39002DB6E4 /* BW-kitten.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +358,7 @@
 				CE3EFE9E1444D97900696C4D /* StoryEditor.m in Sources */,
 				CEE9A3E61444DCE2002DB6E4 /* Image.m in Sources */,
 				CEE9A3EA1444DCE3002DB6E4 /* Story.m in Sources */,
+				CEE9A4091444EDC2002DB6E4 /* ImageDemoFilledCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,10 +378,10 @@
 			target = CE3EFE4B1444D70900696C4D /* StoryBlocks */;
 			targetProxy = CE3EFE7E1444D70B00696C4D /* PBXContainerItemProxy */;
 		};
-		CEE9A3F71444E4C7002DB6E4 /* PBXTargetDependency */ = {
+		CEE9A4041444EAEA002DB6E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AQGridView;
-			targetProxy = CEE9A3F61444E4C7002DB6E4 /* PBXContainerItemProxy */;
+			targetProxy = CEE9A4031444EAEA002DB6E4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

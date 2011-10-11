@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Story.h"
-#import "AQGridViewController.h"
+#import "AQGridView.h"
 
-@interface StoryEditor : UIViewController
+@interface StoryEditor : UIViewController <AQGridViewDelegate,AQGridViewDataSource>
 
-@property (nonatomic, retain) Story *story;
-@property (nonatomic, retain) AQGridViewController *gridViewController;
+@property (retain, nonatomic) Story *story;
+@property (retain, nonatomic) IBOutlet AQGridView *gridView;
 
 @end

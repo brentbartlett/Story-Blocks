@@ -7,10 +7,11 @@
 //
 
 #import "StoryEditor.h"
+#import "ImageDemoFilledCell.h"
 
 @implementation StoryEditor
 @synthesize story = _story;
-@synthesize gridViewController = _gridViewController;
+@synthesize gridView = _gridView;
 
 - (void)setStory:(Story*)story {
     if (_story != nil) {
@@ -18,7 +19,6 @@
         _story = nil;
     }
     _story = [story retain];
-    self.gridViewController = [[AQGridViewController alloc] initWithNibName:nil bundle:nil];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,16 +38,60 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+#pragma mark -
+#pragma mark Grid View Data Source
+
+- (NSUInteger) numberOfItemsInGridView: (AQGridView *) aGridView
+{
+//    return ( [_imageNames count] );
+    return 13;
+}
+
+- (AQGridViewCell *) gridView: (AQGridView *) aGridView cellForItemAtIndex: (NSUInteger) index
+{
+    ImageDemoFilledCell *cell = (ImageDemoFilledCell *)[aGridView dequeueReusableCellWithIdentifier: @"ImageCell"];
+    if ( cell == nil )
+    {
+        cell = [[[ImageDemoFilledCell alloc] initWithFrame: CGRectMake(0.0, 0.0, 200.0, 150.0)
+                                                 reuseIdentifier: @"ImageCell"] autorelease];
+        cell.selectionStyle = AQGridViewCellSelectionStyleBlueGray;
+    }
+    
+    cell.image = [UIImage imageNamed: @"BW-kitten.jpg"];
+    return cell;
+}
+
+- (CGSize) portraitGridCellSizeForGridView: (AQGridView *) aGridView
+{
+    return CGSizeMake(256, 256);
+}
+
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    AQGridView *newGridView = [[AQGridView alloc] initWithFrame:self.gridView.frame];
+    [self.gridView removeFromSuperview];
+    self.gridView = newGridView;
+    [self.view addSubview:self.gridView];
+    
+    self.gridView.dataSource = self;
+    self.gridView.delegate = self;
+    self.gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+	self.gridView.autoresizesSubviews = YES;
+    self.gridView.backgroundColor = [UIColor blackColor];
+
+    [self.gridView reloadData];
+
 }
 
 - (void)viewDidUnload
 {
+    [self setGridView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -59,4 +103,8 @@
 	return YES;
 }
 
+- (void)dealloc {
+    [_gridView release];
+    [super dealloc];
+}
 @end
