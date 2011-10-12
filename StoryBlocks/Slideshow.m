@@ -7,19 +7,46 @@
 //
 
 #import "Slideshow.h"
+#import "StoryEditor.h"
+#import "StoryImage.h"
 
 @implementation Slideshow
 @synthesize scrollView;
 
 @synthesize images;
+@synthesize story;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
+}
+
+- (void)setStory:(Story *)aStory {
+    [story release];
+    story = [aStory retain];
+    self.images = [[NSMutableArray alloc] init];
+    for (StoryImage *image in aStory.images) {
+        [self.images addObject:[UIImage imageNamed:image.imageName]];
+    }
+    
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(edit)];
+    self.navigationItem.rightBarButtonItem = editButton;
+    [editButton release];
+
+}
+
+- (void)edit {
+    if (self.story != nil) {
+        StoryEditor *editor = [[StoryEditor alloc] initWithNibName:nil bundle:nil];
+        [editor setStory:self.story];
+        [self.navigationController pushViewController:editor animated:YES];
+        [editor release];
+    }
 }
 
 - (void)didReceiveMemoryWarning

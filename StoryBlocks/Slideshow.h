@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Story.h"
 
 @interface Slideshow : UIViewController
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (retain, nonatomic) NSArray *images;
+@property (retain, nonatomic) NSMutableArray *images;
+@property (retain, nonatomic) Story *story;
 
 @end

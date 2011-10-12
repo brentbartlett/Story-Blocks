@@ -7,7 +7,6 @@
 //
 
 #import "SBAppDelegate.h"
-#import "LandingView.h"
 #import "StoryList.h"
 
 //#import "SBMasterViewController.h"
@@ -39,7 +38,7 @@
     // Override point for customization after application launch.
 
 //    LandingView *landing = [[LandingView alloc] initWithNibName:nil bundle:nil];
-    StoryList *storyList = [[StoryList alloc] initWithNibName:nil bundle:nil];
+    StoryList *storyList = [[StoryList alloc] initWithNibName:@"LandingView" bundle:nil];
     storyList.managedObjectContext = self.managedObjectContext;
     self.navigation = [[UINavigationController alloc] initWithRootViewController:storyList];
     [self.navigation.navigationBar setBarStyle:UIBarStyleBlackOpaque]; 

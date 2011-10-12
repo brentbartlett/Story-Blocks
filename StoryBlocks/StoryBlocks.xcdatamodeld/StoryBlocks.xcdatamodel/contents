@@ -2,7 +2,7 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="11B26" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Image" representedClassName="Image" syncable="YES">
         <attribute name="imageName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="story" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Story" inverseName="images" inverseEntity="Story" syncable="YES"/>
+        <relationship name="story" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Story" inverseName="images" inverseEntity="Story" syncable="YES"/>
     </entity>
     <entity name="Story" representedClassName="Story" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>

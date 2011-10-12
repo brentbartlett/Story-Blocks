@@ -9,8 +9,10 @@
 #import "StoryList.h"
 #import "Story.h"
 #import "StoryEditor.h"
+#import "Slideshow.h"
 
 @implementation StoryList
+@synthesize tableView = _tableView;
 
 @synthesize detailViewController = _detailViewController;
 @synthesize fetchedResultsController = __fetchedResultsController;
@@ -21,7 +23,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"Stories", @"Stories");
-        self.clearsSelectionOnViewWillAppear = NO;
+//        self.clearsSelectionOnViewWillAppear = NO;
         self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
     }
     return self;
@@ -32,6 +34,7 @@
     [_detailViewController release];
     [__fetchedResultsController release];
     [__managedObjectContext release];
+    [_tableView release];
     [super dealloc];
 }
 
@@ -56,6 +59,7 @@
 
 - (void)viewDidUnload
 {
+    [self setTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -107,6 +111,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+//        cell.textLabel.textColor = [UIColor whiteColor];
     }
     
     [self configureCell:cell atIndexPath:indexPath];
@@ -152,13 +157,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    Story *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
 //    self.detailViewController.detailItem = selectedObject;  
-    StoryEditor *editor = [[StoryEditor alloc] initWithNibName:nil bundle:nil];
-    editor.story = (Story*)selectedObject;
-    [self.navigationController pushViewController:editor animated:YES];
-    [editor release];
+//    StoryEditor *editor = [[StoryEditor alloc] initWithNibName:nil bundle:nil];
+//    editor.story = (Story*)selectedObject;
+//    [self.navigationController pushViewController:editor animated:YES];
+//    [editor release];
     
+    Slideshow *slideshow = [[Slideshow alloc] initWithNibName:nil bundle:nil];
+    [slideshow setStory:selectedObject];
+    [self.navigationController pushViewController:slideshow animated:YES];
+    [slideshow release];
 }
 
 #pragma mark - Fetched results controller
@@ -292,7 +301,7 @@
     // Create a new instance of the entity managed by the fetched results controller.
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    Story *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
@@ -309,6 +318,11 @@
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
+    } else {
+        StoryEditor *editor = [[StoryEditor alloc] initWithNibName:nil bundle:nil];
+        [editor setStory:newManagedObject];
+        [self.navigationController pushViewController:editor animated:YES];
+        [editor release];
     }
 }
 

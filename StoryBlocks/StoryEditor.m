@@ -17,7 +17,12 @@
 @synthesize gridView = _gridView;
 @synthesize images;
 @synthesize imageDatabase;
+@synthesize imageNames;
 @synthesize storyImages;
+
+- (void)save {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)setStory:(Story*)story {
     if (_story != nil) {
@@ -27,19 +32,22 @@
     _story = [story retain];
     self.images = [[NSMutableArray alloc] init];
     for (StoryImage* image in self.story.images) {
-//        [self.images addObject:[UIImage imageNamed:image.imageName]];
+        [self.images addObject:[UIImage imageNamed:image.imageName]];
     }
     self.imageDatabase = [[NSMutableArray alloc] init];
+    self.imageNames = [[NSMutableArray alloc] init];
     NSArray * paths = [NSBundle pathsForResourcesOfType: @"jpg" inDirectory: [[NSBundle mainBundle] bundlePath]];
     
     for ( NSString * path in paths )
     {
         [self.imageDatabase addObject: [UIImage imageNamed:[path lastPathComponent]]];
+        [self.imageNames addObject: [path lastPathComponent]];
     }
+    
     [self.storyImages reloadData];
     [self.gridView reloadData];
     self.title = story.name;
-    self.nameField.text = story.name;
+    [self.nameField setText:story.name];
 
 }
 
@@ -48,7 +56,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-
+        UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(save)];
+        self.navigationItem.rightBarButtonItem = saveButton;
+        [saveButton release];
     }
     return self;
 }
@@ -67,10 +77,15 @@
 - (void)gridView:(AQGridView *)gridView didSelectItemAtIndex:(NSUInteger)index {
     [self.images addObject:[self.imageDatabase objectAtIndex:index]];
     
+    NSEntityDescription *description = [NSEntityDescription entityForName:@"Image" inManagedObjectContext:self.story.managedObjectContext];
     
+    StoryImage *storyImage = [[StoryImage alloc] initWithEntity:description insertIntoManagedObjectContext:self.story.managedObjectContext];
+    storyImage.imageName = [self.imageNames objectAtIndex:index];
+    storyImage.story = self.story;
     
     NSLog(@"Added an image, now have %d images", self.images.count);
     [self.imageDatabase removeObjectAtIndex:index];
+    [self.imageNames removeObjectAtIndex:index];
     [gridView deleteItemsAtIndices:[NSIndexSet indexSetWithIndex:index] withAnimation:AQGridViewItemAnimationFade];
     [self.storyImages reloadData];
 }
@@ -173,6 +188,11 @@
 	return YES;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    NSError *error = [[NSError alloc] init];
+    [[self.story managedObjectContext] save:&error];
+}
+
 - (void)dealloc {
     [_gridView release];
     [storyImages release];
@@ -188,6 +208,7 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
     return YES;
 }
 

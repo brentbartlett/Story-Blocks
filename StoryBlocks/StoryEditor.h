@@ -17,6 +17,7 @@
 @property (retain, nonatomic) IBOutlet AQGridView *gridView;
 @property (retain, nonatomic) NSMutableArray *images;
 @property (retain, nonatomic) NSMutableArray *imageDatabase;
+@property (retain, nonatomic) NSMutableArray *imageNames;
 @property (retain, nonatomic) IBOutlet UITableView *storyImages;
 - (IBAction)preview:(id)sender;
 @property (retain, nonatomic) IBOutlet UITextField *nameField;

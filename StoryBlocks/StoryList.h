@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface StoryList : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface StoryList : UIViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) UIViewController *detailViewController;
 
@@ -17,5 +17,6 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+@property (retain, nonatomic) IBOutlet UITableView *tableView;
 
 @end
